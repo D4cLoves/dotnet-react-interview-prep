@@ -5,30 +5,28 @@
 
 ---
 
-## 📌 Вопрос Дня (День 16 — 2026-08-04)
+## 📌 Вопрос Дня (День 17 — 2026-08-05)
 
-### 🏷️ Тема: `ASP.NET Core`
-### ❓ В чем разница между Transient, Scoped и Singleton временно́й жизнью сервисов в Dependency Injection?
+### 🏷️ Тема: `React`
+### ❓ Зачем нужен хук `useEffect` и как работает его массив зависимостей?
 
 #### 💡 Ответ и разбор:
-В встроенном DI контейнере ASP.NET Core есть три основных времени жизни (Lifetime):
+Хук `useEffect` используется для выполнения **побочных эффектов (side-effects)** в функциональных компонентах: запрос данных с сервера, подписки на события, манипуляции с DOM.
 
-1. **Transient (`AddTransient`)**:
-   * Экземпляр создается **каждый раз**, когда запрашивается из контейнера.
-   * Используется для легких сервисов без состояния (stateless).
+**Массив зависимостей (Dependency Array):**
 
-2. **Scoped (`AddScoped`)**:
-   * Экземпляр создается **один раз на каждый HTTP-запрос** (в рамках одного Scope).
-   * Подходит для сервисов, хранящих состояние в рамках запроса, например, `DbContext` в EF Core.
+1. `useEffect(() => { ... })` — без массива. Вызывается **после каждого рендера** компонента.
+2. `useEffect(() => { ... }, [])` — пустой массив. Вызывается **только один раз** при монтировании компонента (Mount).
+3. `useEffect(() => { ... }, [count, user])` — вызывается при первом рендере, а также при изменении значений `count` или `user`.
 
-3. **Singleton (`AddSingleton`)**:
-   * Экземпляр создается **один раз** при первом обращении и живет всё время работы приложения.
-   * Используется для кэшей, синглтон-конфигураций или сервисов с тяжелой инициализацией.
+**Cleanup функция (Очистка):**
+Если эффект возвращает функцию, она вызывается перед размонтированием компонента или перед следующим запуском эффекта.
 
-```csharp
-builder.Services.AddTransient<IMyTransientService, MyTransientService>();
-builder.Services.AddScoped<IMyScopedService, MyScopedService>();
-builder.Services.AddSingleton<IMySingletonService, MySingletonService>();
+```tsx
+useEffect(() => {
+  const timer = setInterval(() => console.log('tick'), 1000);
+  return () => clearInterval(timer); // Очистка таймера
+}, []);
 ```
 
 ---
@@ -53,6 +51,7 @@ builder.Services.AddSingleton<IMySingletonService, MySingletonService>();
 | День 014 | `ASP.NET Core / Architecture` | [Что такое паттерн CQRS и библиотека MediatR?](questions/day-014.md) |
 | День 015 | `TypeScript` | [В чем разница между `type` и `interface` в TypeScript?](questions/day-015.md) |
 | День 016 | `ASP.NET Core` | [В чем разница между Transient, Scoped и Singleton временно́й жизнью сервисов в Dependency Injection?](questions/day-016.md) |
+| День 017 | `React` | [Зачем нужен хук `useEffect` и как работает его массив зависимостей?](questions/day-017.md) |
 
 ---
 
