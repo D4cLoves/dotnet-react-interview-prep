@@ -5,28 +5,29 @@
 
 ---
 
-## 📌 Вопрос Дня (День 32 — 2026-08-20)
+## 📌 Вопрос Дня (День 33 — 2026-08-21)
 
-### 🏷️ Тема: `React`
-### ❓ Зачем нужен хук `useEffect` и как работает его массив зависимостей?
+### 🏷️ Тема: `C# / EF Core`
+### ❓ В чем ключевая разница между `IEnumerable<T>` и `IQueryable<T>`?
 
 #### 💡 Ответ и разбор:
-Хук `useEffect` используется для выполнения **побочных эффектов (side-effects)** в функциональных компонентах: запрос данных с сервера, подписки на события, манипуляции с DOM.
+Главное отличие заключается в **месте выполнения запроса** и способе его трансляции:
 
-**Массив зависимостей (Dependency Array):**
+1. **`IEnumerable<T>` (LINQ to Objects)**:
+   * Фильтрация происходит в **памяти приложения** (.NET CLR).
+   * Выполняет SQL-запрос к БД и вытягивает **все** записи в память, а затем фильтрует их.
 
-1. `useEffect(() => { ... })` — без массива. Вызывается **после каждого рендера** компонента.
-2. `useEffect(() => { ... }, [])` — пустой массив. Вызывается **только один раз** при монтировании компонента (Mount).
-3. `useEffect(() => { ... }, [count, user])` — вызывается при первом рендере, а также при изменении значений `count` или `user`.
+2. **`IQueryable<T>` (LINQ to Entities)**:
+   * Наследует `IEnumerable`, но содержит `Expression Tree` (дерево выражений).
+   * Фильтрация происходит **на стороне СУБД**.
+   * EF Core транслирует выражения в оптимальный SQL-запрос (`WHERE`, `TOP`, `JOIN`) и запрашивает из БД только нужные строки.
 
-**Cleanup функция (Очистка):**
-Если эффект возвращает функцию, она вызывается перед размонтированием компонента или перед следующим запуском эффекта.
+```csharp
+// IQueryable: в БД уходит `SELECT * FROM Users WHERE Age > 18`
+IQueryable<User> query = dbContext.Users.Where(u => u.Age > 18);
 
-```tsx
-useEffect(() => {
-  const timer = setInterval(() => console.log('tick'), 1000);
-  return () => clearInterval(timer); // Очистка таймера
-}, []);
+// IEnumerable: в БД уходит `SELECT * FROM Users`, фильтрация идет в C#
+IEnumerable<User> list = dbContext.Users.AsEnumerable().Where(u => u.Age > 18);
 ```
 
 ---
@@ -67,6 +68,7 @@ useEffect(() => {
 | День 030 | `TypeScript` | [В чем разница между `type` и `interface` в TypeScript?](questions/day-030.md) |
 | День 031 | `ASP.NET Core` | [В чем разница между Transient, Scoped и Singleton временно́й жизнью сервисов в Dependency Injection?](questions/day-031.md) |
 | День 032 | `React` | [Зачем нужен хук `useEffect` и как работает его массив зависимостей?](questions/day-032.md) |
+| День 033 | `C# / EF Core` | [В чем ключевая разница между `IEnumerable<T>` и `IQueryable<T>`?](questions/day-033.md) |
 
 ---
 
