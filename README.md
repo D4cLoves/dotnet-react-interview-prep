@@ -5,22 +5,31 @@
 
 ---
 
-## 📌 Вопрос Дня (День 45 — 2026-09-02)
+## 📌 Вопрос Дня (День 46 — 2026-09-03)
 
-### 🏷️ Тема: `TypeScript`
-### ❓ В чем разница между `type` и `interface` в TypeScript?
+### 🏷️ Тема: `ASP.NET Core`
+### ❓ В чем разница между Transient, Scoped и Singleton временно́й жизнью сервисов в Dependency Injection?
 
 #### 💡 Ответ и разбор:
-Оба способа задают форму объекта, но есть различия:
+В встроенном DI контейнере ASP.NET Core есть три основных времени жизни (Lifetime):
 
-1. **`interface`**:
-   * Поддерживает **Declaration Merging** (несколько интерфейсов с одинаковым именем объединяются).
-   * Расширяется через `extends` (`interface Admin extends User`).
-   * Лучше подходит для описания объектных моделей и API.
+1. **Transient (`AddTransient`)**:
+   * Экземпляр создается **каждый раз**, когда запрашивается из контейнера.
+   * Используется для легких сервисов без состояния (stateless).
 
-2. **`type`**:
-   * Может описывать примитивы, объединения (`Union`), пересечения (`Intersection`) и кортежи (`type Status = 'active' | 'pending'`).
-   * Не поддерживает повторное объявление.
+2. **Scoped (`AddScoped`)**:
+   * Экземпляр создается **один раз на каждый HTTP-запрос** (в рамках одного Scope).
+   * Подходит для сервисов, хранящих состояние в рамках запроса, например, `DbContext` в EF Core.
+
+3. **Singleton (`AddSingleton`)**:
+   * Экземпляр создается **один раз** при первом обращении и живет всё время работы приложения.
+   * Используется для кэшей, синглтон-конфигураций или сервисов с тяжелой инициализацией.
+
+```csharp
+builder.Services.AddTransient<IMyTransientService, MyTransientService>();
+builder.Services.AddScoped<IMyScopedService, MyScopedService>();
+builder.Services.AddSingleton<IMySingletonService, MySingletonService>();
+```
 
 ---
 
@@ -73,6 +82,7 @@
 | День 043 | `React` | [Что такое React StrictMode и почему компоненты рендерятся дважды в разработке?](questions/day-043.md) |
 | День 044 | `ASP.NET Core / Architecture` | [Что такое паттерн CQRS и библиотека MediatR?](questions/day-044.md) |
 | День 045 | `TypeScript` | [В чем разница между `type` и `interface` в TypeScript?](questions/day-045.md) |
+| День 046 | `ASP.NET Core` | [В чем разница между Transient, Scoped и Singleton временно́й жизнью сервисов в Dependency Injection?](questions/day-046.md) |
 
 ---
 
