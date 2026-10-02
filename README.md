@@ -5,19 +5,22 @@
 
 ---
 
-## 📌 Вопрос Дня (День 74 — 2026-10-01)
+## 📌 Вопрос Дня (День 75 — 2026-10-02)
 
-### 🏷️ Тема: `ASP.NET Core / Architecture`
-### ❓ Что такое паттерн CQRS и библиотека MediatR?
+### 🏷️ Тема: `TypeScript`
+### ❓ В чем разница между `type` и `interface` в TypeScript?
 
 #### 💡 Ответ и разбор:
-**CQRS (Command Query Responsibility Segregation):**
-Паттерн разделения ответственности, в котором операции чтения (Query) отделены от операций изменения данных (Command).
+Оба способа задают форму объекта, но есть различия:
 
-**MediatR:**
-Реализует паттерн «Медиатор» в .NET.
-* Контроллеры не вызывают напрямую сервисы или DbContext, а отправляют команду или запрос: `await _mediator.Send(new CreateUserCommand(dto))`.
-* Повышает слабую связанность (Loose Coupling) и упрощает тестирование.
+1. **`interface`**:
+   * Поддерживает **Declaration Merging** (несколько интерфейсов с одинаковым именем объединяются).
+   * Расширяется через `extends` (`interface Admin extends User`).
+   * Лучше подходит для описания объектных моделей и API.
+
+2. **`type`**:
+   * Может описывать примитивы, объединения (`Union`), пересечения (`Intersection`) и кортежи (`type Status = 'active' | 'pending'`).
+   * Не поддерживает повторное объявление.
 
 ---
 
@@ -99,6 +102,7 @@
 | День 072 | `ASP.NET Core` | [Что такое SignalR и когда его следует использовать?](questions/day-072.md) |
 | День 073 | `React` | [Что такое React StrictMode и почему компоненты рендерятся дважды в разработке?](questions/day-073.md) |
 | День 074 | `ASP.NET Core / Architecture` | [Что такое паттерн CQRS и библиотека MediatR?](questions/day-074.md) |
+| День 075 | `TypeScript` | [В чем разница между `type` и `interface` в TypeScript?](questions/day-075.md) |
 
 ---
 
