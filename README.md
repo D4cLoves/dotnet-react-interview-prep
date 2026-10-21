@@ -5,30 +5,21 @@
 
 ---
 
-## 📌 Вопрос Дня (День 93 — 2026-10-20)
+## 📌 Вопрос Дня (День 94 — 2026-10-21)
 
-### 🏷️ Тема: `C# / EF Core`
-### ❓ В чем ключевая разница между `IEnumerable<T>` и `IQueryable<T>`?
+### 🏷️ Тема: `React / TypeScript`
+### ❓ Что такое Virtual DOM в React и как работает алгоритм Reconciliation (Diffing)?
 
 #### 💡 Ответ и разбор:
-Главное отличие заключается в **месте выполнения запроса** и способе его трансляции:
+Virtual DOM (VDOM) — это легкая копия реального DOM в виде дерева JS-объектов в памяти.
 
-1. **`IEnumerable<T>` (LINQ to Objects)**:
-   * Фильтрация происходит в **памяти приложения** (.NET CLR).
-   * Выполняет SQL-запрос к БД и вытягивает **все** записи в память, а затем фильтрует их.
+**Как работает reconciliation (сопоставление):**
+1. При изменении состояния (`state` или `props`) React создает новое дерево Virtual DOM.
+2. React сравнивает новое VDOM-дерево со старым VDOM-деревом (процесс **Diffing**).
+3. Находится минимальное количество изменений.
+4. Выполняется **Batching** и узел реального DOM обновляется **только там, где произошли изменения**, избегая дорогостоящей перерисовки всего браузерного DOM.
 
-2. **`IQueryable<T>` (LINQ to Entities)**:
-   * Наследует `IEnumerable`, но содержит `Expression Tree` (дерево выражений).
-   * Фильтрация происходит **на стороне СУБД**.
-   * EF Core транслирует выражения в оптимальный SQL-запрос (`WHERE`, `TOP`, `JOIN`) и запрашивает из БД только нужные строки.
-
-```csharp
-// IQueryable: в БД уходит `SELECT * FROM Users WHERE Age > 18`
-IQueryable<User> query = dbContext.Users.Where(u => u.Age > 18);
-
-// IEnumerable: в БД уходит `SELECT * FROM Users`, фильтрация идет в C#
-IEnumerable<User> list = dbContext.Users.AsEnumerable().Where(u => u.Age > 18);
-```
+*Замечание:* Ключ `key` в списках нужен React для того, чтобы быстро идентифицировать перемещенные, добавленные или удаленные элементы при сравнении VDOM деревьев.
 
 ---
 
@@ -129,6 +120,7 @@ IEnumerable<User> list = dbContext.Users.AsEnumerable().Where(u => u.Age > 18);
 | День 091 | `ASP.NET Core` | [В чем разница между Transient, Scoped и Singleton временно́й жизнью сервисов в Dependency Injection?](questions/day-091.md) |
 | День 092 | `React` | [Зачем нужен хук `useEffect` и как работает его массив зависимостей?](questions/day-092.md) |
 | День 093 | `C# / EF Core` | [В чем ключевая разница между `IEnumerable<T>` и `IQueryable<T>`?](questions/day-093.md) |
+| День 094 | `React / TypeScript` | [Что такое Virtual DOM в React и как работает алгоритм Reconciliation (Diffing)?](questions/day-094.md) |
 
 ---
 
